@@ -1,10 +1,27 @@
+import { Body } from "./Body";
+import { Feed } from "./Feed";
+import Login from "./Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Profile from "./Profile";
+import Connections from "./Connections";
+import Requests from "./Requests";
+import Signup from "./Signup";
+
 function App() {
   return (
     <>
-      <p className="text-3xl font-bold underline text-red-600">Hello world</p>
-      <button className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
-        Button
-      </button>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route path="/" element={<Feed />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/connections" element={<Connections />}></Route>
+            <Route path="/requests" element={<Requests />}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
