@@ -1,3 +1,3 @@
 export const Feed = () => {
-  return <div>Feed</div>;
+  return <div className="min-h-screen">Feed</div>;
 };
