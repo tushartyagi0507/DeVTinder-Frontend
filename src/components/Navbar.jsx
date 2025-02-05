@@ -1,7 +1,20 @@
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { URL } from "../Utils/Constants";
+import { useNavigate } from "react-router-dom";
+import { removeUser } from "../Utils/userSlice";
 
 export const Navbar = () => {
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+
+  const handleLogout = async () => {
+    await axios.get(URL + "logout", { withCredentials: true });
+    Navigate("/login");
+    dispatch(removeUser());
+  };
+
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -10,6 +23,7 @@ export const Navbar = () => {
         </div>
         {user && (
           <div className="flex-none px-6">
+            <p className="px-2">Welcome {user.FirstName}</p>
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
@@ -19,7 +33,7 @@ export const Navbar = () => {
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    src={user.photoUrl}
                   />
                 </div>
               </div>
@@ -36,7 +50,7 @@ export const Navbar = () => {
                 <li>
                   <a>Settings</a>
                 </li>
-                <li>
+                <li onClick={handleLogout}>
                   <a>Logout</a>
                 </li>
               </ul>
