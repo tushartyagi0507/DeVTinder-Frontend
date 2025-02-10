@@ -11,15 +11,17 @@ export const Navbar = () => {
 
   const handleLogout = async () => {
     await axios.get(URL + "logout", { withCredentials: true });
-    Navigate("/login");
     dispatch(removeUser());
+    Navigate("/login");
   };
 
   return (
     <div>
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">DevHinge</a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            DevHinge
+          </Link>
         </div>
         {user && (
           <div className="flex-none px-6">

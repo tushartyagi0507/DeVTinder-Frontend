@@ -20,14 +20,13 @@ export const Body = () => {
       const response = await axios.get(URL + "profile", {
         withCredentials: true,
       });
-      console.log(response);
+      // console.log(response);
       dispatch(addUser(response.data.data));
     } catch (e) {
       if (e.status === 401) {
         Navigate("/login");
         return;
-      }
-      console.log(e);
+      } else return;
     }
   };
 

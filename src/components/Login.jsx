@@ -8,6 +8,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("tushar@gmail.com ");
   const [password, setPassword] = useState("Tushar@123");
+  const [error, seterrror] = useState(null);
 
   const Navigate = useNavigate();
 
@@ -25,11 +26,10 @@ const Login = () => {
       );
       console.log(response.data.data);
       dispatch(addUser(response?.data?.data));
-      Navigate("/feed");
       addUser(response?.data?.data);
       Navigate("/");
     } catch (e) {
-      console.log(e.message);
+      seterrror(e.response.data.message);
     }
   };
 
@@ -67,7 +67,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
+          {error && <p className="text-red-600">Error: {error}</p>}
           <button
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-medium"
             onClick={handleLogin}
