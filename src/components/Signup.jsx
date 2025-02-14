@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import swipe from "../assets/swipe.gif";
 import { useState } from "react";
 import axios from "axios";
+import { addUser } from "../Utils/userSlice";
 
 const Signup = () => {
   // First, modify the fieldInput constant at the top of the file
@@ -41,6 +42,7 @@ const Signup = () => {
         withCredentials: true,
       });
       console.log(res);
+      addUser(user);
       Navigate("/");
     } catch (e) {
       seterror(error?.response?.data?.message);

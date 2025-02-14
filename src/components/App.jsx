@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import Connections from "./Connections";
 import Requests from "./Requests";
 import Signup from "./Signup";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </>
   );
 }

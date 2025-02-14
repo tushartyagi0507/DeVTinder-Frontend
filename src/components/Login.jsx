@@ -7,8 +7,8 @@ import hero from "../assets/hero.png";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("tushar@gmail.com ");
-  const [password, setPassword] = useState("Tushar@123");
+  const [email, setEmail] = useState("rohit@gmail.com ");
+  const [password, setPassword] = useState("Rohit@123");
   const [error, seterrror] = useState(null);
 
   const Navigate = useNavigate();
