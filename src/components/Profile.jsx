@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../Utils/userSlice";
 import toast from "react-hot-toast";
+import { FaCamera } from "react-icons/fa";
 // import toast from "react-hot-toast";
 
 const Profile = () => {
@@ -12,7 +13,7 @@ const Profile = () => {
 
   const [userData, setUserData] = useState(null);
   const fileInputRef = useRef(null);
-  // const [profileImage, setProfileImage] = useState(user?.photoUrl);
+  const [profileImage, setProfileImage] = useState(user?.photoUrl);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const Profile = () => {
         gender: user?.gender || "",
         about: user?.about || "",
       });
+      setProfileImage(user.photoUrl);
     }
   }, [user]);
 
@@ -69,29 +71,36 @@ const Profile = () => {
   };
 
   const handleImageChange = async (e) => {
-    // const files = e.target.files; // Get all selected files
-    // if (files.length > 0) {
-    //   const formData = new FormData();
+    e.preventDefault();
+    const file = fileInputRef.current.files[0];
+    setProfileImage(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setProfileImage(reader.result);
+    };
 
-    //   Array.from(files).forEach((file) => {
-    //     formData.append("photoUrl", file); // Append each file to the FormData object
-    //   });
-
-    //   try {
-    //     const response = await axios.post(
-    //       `http://localhost:3000/profile/uploadProfileImg`, // Endpoint should support multiple file uploads
-    //       formData,
-    //       { withCredentials: true }
-    //     );
-    //     if (response?.data?.success) {
-    //       toast.success("Profile images uploaded successfully!");
-    //       setProfileImage(response?.data?.data?.photoURL);
-    //     }
-    //   } catch (e) {
-    //     toast.error("Error in uploading images" + " " + e.message);
-    //   }
-    // }
-    console.log(e.target.value);
+    const formData = new FormData();
+    formData.append("profilelePhoto", file);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/profile/uploadPhoto",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+      setProfileImage(response?.data?.imageUrl);
+    } catch (e) {
+      const error = e?.response?.data?.message;
+      console.log(error);
+      setError(error);
+      toast.error(error);
+    }
   };
 
   return (
@@ -203,25 +212,34 @@ const Profile = () => {
               }`}
             >
               <div className="relative group">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                />
-                <img
-                  src={user.photoUrl || ""}
-                  alt="User Profile"
-                  className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
-                />
-                <div
-                  className="absolute top-[10%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 bg-gray-600 text-white p-2 rounded-full shadow-lg cursor-pointer hover:bg-gray-500"
-                  onClick={handleImageClick}
+                <form
+                  onSubmit={handleImageChange}
+                  encType="multipart/form-data"
                 >
-                  {/* <FaCamera className="text-lg" /> */}
-                </div>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    name="profilePhoto"
+                    // onChange={handleImageChange}
+                  />
+                  <img
+                    src={profileImage || ""}
+                    alt="User Profile"
+                    className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
+                  />
+
+                  <div
+                    className="absolute top-[10%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 bg-gray-600 text-white p-2 rounded-full shadow-lg cursor-pointer hover:bg-gray-500"
+                    onClick={handleImageClick}
+                  >
+                    <FaCamera className="text-lg" />
+                  </div>
+                  <button className="btn btn-active btn-neutral my-2">
+                    Upload
+                  </button>
+                </form>
               </div>
               <h3 className="text-xl font-semibold">
                 {user?.FirstName} {user?.LastName}
