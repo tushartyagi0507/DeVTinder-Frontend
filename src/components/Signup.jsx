@@ -3,6 +3,7 @@ import swipe from "../assets/swipe.gif";
 import { useState } from "react";
 import axios from "axios";
 import { addUser } from "../Utils/userSlice";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   // First, modify the fieldInput constant at the top of the file
@@ -44,7 +45,8 @@ const Signup = () => {
       });
       console.log(res);
       addUser(user);
-      Navigate("/");
+      toast.success("User created successfully");
+      Navigate("/feed");
     } catch (e) {
       seterror(error?.response?.data?.message);
       console.log(e.message);

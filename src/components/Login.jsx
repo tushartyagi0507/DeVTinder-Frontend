@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
 import hero from "../assets/hero.png";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Login = () => {
       console.log(response.data.data);
       dispatch(addUser(response?.data?.data));
       addUser(response?.data?.data);
+      toast.success("Logged In successfully");
       Navigate("/");
     } catch (e) {
       seterrror(e.response.data.message);
