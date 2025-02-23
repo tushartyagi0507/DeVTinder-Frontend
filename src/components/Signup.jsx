@@ -6,7 +6,7 @@ import { addUser } from "../Utils/userSlice";
 
 const Signup = () => {
   // First, modify the fieldInput constant at the top of the file
-  const fieldInput = "flex flex-row items-center gap-4 ";
+  const fieldInput = "flex flex-row items-center gap-5 ";
   const { labelText } = "font-bol text-lg";
   const Navigate = useNavigate();
 
@@ -16,6 +16,7 @@ const Signup = () => {
     email: "",
     password: "",
     age: "",
+    photoUrl: "",
     gender: "",
     about: "",
   };
@@ -60,10 +61,10 @@ const Signup = () => {
           </h2>
         </div>
         <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="w-1/2">
+          <div className="w-1/2 ">
             <img src={swipe} alt="swipe.gif" />
           </div>
-          <div className="card bg-gradient-to-r bg-gray-300 bg-steel-800 w-full max-w-sm shrink-0 shadow-2xl">
+          <div className="card bg-gradient-to-r bg-gray-300 bg-steel-800 w-full max-w-sm shrink-0 shadow-2xl mr-4">
             <form className="card-body" onSubmit={handleSubmit}>
               <div className={fieldInput}>
                 <label className="label w-1/3">
@@ -164,6 +165,22 @@ const Signup = () => {
                   <option value="female">Female</option>
                   <option value="others">others</option>
                 </select>
+              </div>
+              <div className={fieldInput}>
+                <label className="label w-1/3">
+                  <span className={labelText}>PhotoUrl</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="photoUrl"
+                  name="photoUrl"
+                  value={user.photoUrl}
+                  onChange={(e) => {
+                    handleInput(e);
+                  }}
+                  className="input input-bordered flex-1"
+                  required
+                />
               </div>
               <div className={fieldInput}>
                 <label className="label w-1/3">
