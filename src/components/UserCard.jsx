@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { removeFeed } from "../Utils/feedSlice";
+import { updateFeed } from "../Utils/feedSlice";
 import { URL } from "../Utils/Constants";
 
 const UserCard = ({ user }) => {
@@ -10,12 +10,13 @@ const UserCard = ({ user }) => {
 
   const handleSendRequest = async (status, userId) => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const res = await axios.post(
-        URL + "/request/send/" + status + "/" + userId,
+        URL + "request/send/" + status + "/" + userId,
         {},
         { withCredentials: true }
       );
-      dispatch(removeFeed(userId));
+      dispatch(updateFeed(userId));
     } catch (err) {
       console.log(err.message);
     }
@@ -24,11 +25,11 @@ const UserCard = ({ user }) => {
   return (
     <div className="card bg-base-300 w-96 shadow-xl">
       <figure>
-        <img src={user.photoUrl} alt="photo" />
+        <img src={photoUrl} alt="photo" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{FirstName + " " + LastName}</h2>
-        {age && gender && <p>{age + ", " + gender}</p>}
+        <p>{age + ", " + gender}</p>
         <p>{about}</p>
         <div className="card-actions justify-center my-4">
           <button

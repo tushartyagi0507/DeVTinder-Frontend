@@ -30,7 +30,7 @@ const Login = () => {
       dispatch(addUser(response?.data?.data));
       addUser(response?.data?.data);
       toast.success("Logged In successfully");
-      Navigate("/");
+      Navigate("/feed");
     } catch (e) {
       seterrror(e.response.data.message);
     }

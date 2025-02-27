@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const Signup = () => {
   // First, modify the fieldInput constant at the top of the file
   const fieldInput = "flex flex-row items-center gap-5 ";
-  const { labelText } = "font-bol text-lg";
+  const { labelText } = "font-bold text-lg";
   const Navigate = useNavigate();
 
   const userData = {
@@ -33,20 +33,21 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(typeof user.age);
     if (typeof user.age === "string") {
       setuser((prev) => ({ ...prev, age: Number(user.age) }));
     }
 
     try {
       seterror("");
-      e.preventDefault();
       const res = await axios.post("http://localhost:3000/signup", user, {
         withCredentials: true,
       });
       console.log(res);
       addUser(user);
       toast.success("User created successfully");
-      Navigate("/feed");
+      Navigate("/login");
     } catch (e) {
       seterror(error?.response?.data?.message);
       console.log(e.message);
@@ -205,7 +206,9 @@ const Signup = () => {
               </Link>
               {error && <p className="bg-red-600 text-sm">{error}</p>}
               <div className={`${fieldInput} mt-2 flex justify-center`}>
-                <button className="btn btn-primary text-center">Signup</button>
+                <button className="btn btn-primary text-center" type="submit">
+                  Signup
+                </button>
               </div>
             </form>
           </div>

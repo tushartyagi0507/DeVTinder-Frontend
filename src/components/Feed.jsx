@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 import axios from "axios";
@@ -18,7 +19,6 @@ export const Feed = () => {
       const response = await axios.get(URL + "user/feed", {
         withCredentials: true,
       });
-      console.log(response?.data?.data);
       if (response?.data?.data === "No user found") return;
       dispatch(addFeed(response?.data?.data));
       setshimmer(false);
