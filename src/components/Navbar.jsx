@@ -21,8 +21,11 @@ export const Navbar = () => {
     <div>
       <div className="navbar bg-neutral">
         <div className="flex-1">
-          <Link to="/feed" className="btn btn-ghost text-xl">
-            DevHinge
+          <Link
+            to="/feed"
+            className="btn btn-ghost   text-2xl font-bold text-indigo-600 tracking-wide hover:text-indigo-800 transition duration-300"
+          >
+            Linkle
           </Link>
         </div>
         {user && (
