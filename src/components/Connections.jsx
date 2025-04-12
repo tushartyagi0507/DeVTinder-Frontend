@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ShimmerCard from "./ShimmerCard";
 import { addConnections } from "../Utils/connectionsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
   const connection = useSelector((store) => store.connections);
   const [loading, setloading] = useState(true);
   // const { theme } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchConnections = async () => {
     // if (connection) return;
@@ -55,6 +57,9 @@ const Connections = () => {
     );
   }
 
+  const handleMessage = (touserId) => {
+    navigate(`/chat/${touserId}`);
+  };
   return (
     <div className="flex-1 overflow-y-auto p-8">
       <h1 className="text-center text-3xl text-primary text-bold">
@@ -93,7 +98,10 @@ const Connections = () => {
                     {/* Bio */}
                     <p className="text-sm mb-3 leading-relaxed">{about}</p>
 
-                    <button className="bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold px-4 py-1.5 rounded-full hover:shadow-lg transition">
+                    <button
+                      className="bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold px-4 py-1.5 rounded-full hover:shadow-lg transition"
+                      onClick={() => handleMessage(info?._id)}
+                    >
                       Message
                     </button>
                   </div>
