@@ -93,7 +93,7 @@ const Profile = () => {
           },
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       setProfileImage(response?.data?.imageUrl);
     } catch (e) {
       const error = e?.response?.data?.message;

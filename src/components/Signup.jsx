@@ -34,7 +34,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(typeof user.age);
+    // console.log(typeof user.age);
     if (typeof user.age === "string") {
       setuser((prev) => ({ ...prev, age: Number(user.age) }));
     }
