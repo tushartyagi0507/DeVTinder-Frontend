@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import ShimmerCard from "./ShimmerCard";
 import { addRequests, removeRequest } from "../Utils/requestsSlice";
 
 const Requests = () => {
-  const request = useSelector((store) => store.request, shallowEqual);
+  const request = useSelector((store) => store.request);
   // const { theme } = useSelector((store) => store.theme);s
   const dispatch = useDispatch();
   const [showloading, setshowloading] = useState(true);
@@ -21,7 +21,6 @@ const Requests = () => {
         }
       );
       dispatch(addRequests(response.data.data));
-      setshowloading(true);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -55,7 +54,7 @@ const Requests = () => {
       </div>
     );
   }
-  if (!request) {
+  if (request.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <h1 className="primary  text-3xl mt-4 font-bold">No request found</h1>

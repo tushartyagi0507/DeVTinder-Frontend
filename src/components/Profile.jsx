@@ -13,7 +13,7 @@ const Profile = () => {
 
   const [userData, setUserData] = useState(null);
   const fileInputRef = useRef(null);
-  const [profileImage, setProfileImage] = useState(user?.photoUrl);
+  // const [profileImage, setProfileImage] = useState(user?.photoUrl);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Profile = () => {
         gender: user?.gender || "",
         about: user?.about || "",
       });
-      setProfileImage(user.photoUrl);
+      // setProfileImage(user.photoUrl);
     }
   }, [user]);
 
@@ -72,35 +72,37 @@ const Profile = () => {
 
   const handleImageChange = async (e) => {
     e.preventDefault();
-    const file = fileInputRef.current.files[0];
-    setProfileImage(file);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setProfileImage(reader.result);
-    };
+    toast.error("Image upload is not available yet");
+    toast.error("Please upload your image from the URL");
+    // const file = fileInputRef.current.files[0];
+    // setProfileImage(file);
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = () => {
+    //   setProfileImage(reader.result);
+    // };
 
-    const formData = new FormData();
-    formData.append("profilelePhoto", file);
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/profile/uploadPhoto",
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      // console.log(response.data);
-      setProfileImage(response?.data?.imageUrl);
-    } catch (e) {
-      const error = e?.response?.data?.message;
-      console.log(error);
-      setError(error);
-      toast.error(error);
-    }
+    // const formData = new FormData();
+    // formData.append("profilelePhoto", file);
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:3000/profile/uploadPhoto",
+    //     formData,
+    //     {
+    //       withCredentials: true,
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   );
+    //   // console.log(response.data);
+    //   setProfileImage(response?.data?.imageUrl);
+    // } catch (e) {
+    //   const error = e?.response?.data?.message;
+    //   console.log(error);
+    //   setError(error);
+    //   toast.error(error);
+    // }
   };
 
   return (
@@ -153,6 +155,19 @@ const Profile = () => {
                   onChange={handleInputData}
                   className="mt-1 w-full p-3 border border-gray-300 rounded bg-transparent"
                   placeholder="Enter your age"
+                />
+              </div>
+              <div>
+                <label htmlFor="photoUrl" className="block text-sm font-medium">
+                  Photo Url
+                </label>
+                <input
+                  type="text"
+                  value={userData?.photoUrl || ""}
+                  onChange={handleInputData}
+                  className="mt-1 w-full p-3 border border-gray-300 rounded bg-transparent"
+                  name="photoUrl"
+                  placeholder="Enter your photo URL"
                 />
               </div>
               <div>
@@ -225,7 +240,7 @@ const Profile = () => {
                     // onChange={handleImageChange}
                   />
                   <img
-                    src={profileImage || ""}
+                    src={userData?.photoUrl || ""}
                     alt="User Profile"
                     className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
                   />
